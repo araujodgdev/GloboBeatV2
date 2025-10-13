@@ -1,7 +1,7 @@
 import PrincipalHeader from "@/components/PrincipalHeader";
 import CardTrilha from "@/components/CardTrilha";
 import Image from "next/image";
-import { Button } from "@chakra-ui/react";
+import { Button,Box, Flex, Text } from "@chakra-ui/react";
 
 export default function TrilhaIdentificada() {
   const trilhas = [
@@ -101,12 +101,13 @@ export default function TrilhaIdentificada() {
           ))}
         </div>
       </main>
-        <footer className="bg-[#055371] text-white !py-6 !mt-12 !text-center">
-            <p className="text-lg font-medium">
-                © {new Date().getFullYear()} - Sistema de Identificação de Trilhas Musicais
-            </p>
-            <p className="text-sm opacity-80">Desenvolvido pelo Squad 7 - Cesar School</p>
-        </footer>
+         <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
+                          <Flex justify="center">
+                            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
+                              GLOBOBEAT
+                            </Text>
+                          </Flex>
+                        </Box>
     </div>
   );
 }

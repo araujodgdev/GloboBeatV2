@@ -14,8 +14,8 @@ export function Sidebar({ children }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuItems = [
-    { label: "Histórico", href: "/dashboard/historico" },
-    { label: "Validação", href: "/dashboard/validacao" },
+    { label: "Histórico", href: "/historico" },
+    { label: "Validação", href: "/validacao" },
     { label: "Dashboard", href: "/dashboard" },
   ]
 
