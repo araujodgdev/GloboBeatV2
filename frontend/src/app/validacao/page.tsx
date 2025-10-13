@@ -5,6 +5,7 @@ import { Header } from "@/components/header"
 import CardTrilha from "@/components/CardTrilha"
 import Image from "next/image"
 import { Button, Box, Flex, Text } from "@chakra-ui/react"
+import { Footer } from "@/components/footer"
 
 export default function TrilhaIdentificada() {
   const trilhas = [
@@ -113,13 +114,7 @@ export default function TrilhaIdentificada() {
         </Flex>
 
         {/* Footer */}
-        <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
-          <Flex justify="center">
-            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
-              GLOBOBEAT
-            </Text>
-          </Flex>
-        </Box>
+        <Footer />
       </Flex>
     </Sidebar>
   )

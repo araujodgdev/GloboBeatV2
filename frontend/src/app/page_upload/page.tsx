@@ -7,6 +7,7 @@ import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react"
 import { Sidebar } from "@/components/sidebar"
 import { Search, User } from "lucide-react"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 export default function DashboardPage() {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
@@ -92,13 +93,7 @@ export default function DashboardPage() {
         </Flex>
 
         {/* Footer */}
-        <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
-          <Flex justify="center">
-            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
-              GLOBOBEAT
-            </Text>
-          </Flex>
-        </Box>
+        <Footer />
       </Flex>
     </Sidebar>
   )

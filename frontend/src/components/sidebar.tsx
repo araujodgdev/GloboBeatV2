@@ -20,7 +20,7 @@ export function Sidebar({ children }: SidebarProps) {
   ]
 
   return (
-    <Flex minH="100vh" position="relative">
+    <Box position="relative" minH="100vh">
       {/* Sidebar */}
       <Box
         position="fixed"
@@ -75,13 +75,13 @@ export function Sidebar({ children }: SidebarProps) {
 
       {/* Main Content */}
       <Box
-        ml={isOpen ? "250px" : "60px"}
-        w={isOpen ? "calc(100% - 250px)" : "calc(100% - 60px)"}
+        // Remove margin and width adjustments
+        ml="0"
+        w="100%"
         transition="all 0.3s ease"
-        minH="100vh"
       >
         {children}
       </Box>
-    </Flex>
+    </Box>
   )
 }
