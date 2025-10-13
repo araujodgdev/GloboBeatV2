@@ -4,16 +4,19 @@ import type React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Box, Button, Input, Text, VStack, Flex } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log("Login:", { email, senha })
+    router.push("/page_upload")
   }
 
   return (
