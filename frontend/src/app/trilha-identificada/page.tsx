@@ -1,10 +1,12 @@
-import type React from "react"
-import PrincipalHeader from "@/components/PrincipalHeader";
-import CardTrilha from "@/components/CardTrilha";
-import Image from "next/image";
-import { Button, Box, Flex, Text } from "@chakra-ui/react";
+"use client"
 
-export default function TrilhaIdentificada() {
+import { Sidebar } from "@/components/sidebar"
+import { Header } from "@/components/header"
+import CardTrilha from "@/components/CardTrilha"
+import Image from "next/image"
+import { Button, Box, Flex, Text } from "@chakra-ui/react"
+
+export default function TrilhasIdentificadas() {
   const trilhas = [
     {
       nome: "Oceano",
@@ -13,7 +15,6 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXX",
-      
     },
     {
       nome: "Oceano",
@@ -22,7 +23,6 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXY",
-      
     },
     {
       nome: "Oceano",
@@ -31,30 +31,38 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXZ",
-      
     },
-  ];
+  ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header normal */}
-      <div className="w-full bg-white shadow-md">
-        <PrincipalHeader />
+    <Sidebar>
+      <Flex direction="column" minH="100vh" bg="white">
+        {/* Header */}
+        <Header />
 
         {/* Barra superior */}
-        <div className="relative px-6 py-4 text-[#055371]">
-          {/* Botão Voltar - canto esquerdo */}
-          <div className="absolute top-4 left-6 flex gap-2 items-center text-2xl cursor-pointer">
+        <Box position="relative" px={6} py={4} color="#055371">
+          {/* Botão Voltar */}
+          <Flex position="absolute" top={4} left={6} gap={2} align="center" cursor="pointer" fontSize="2xl">
             <Image src="/voltar.png" alt="Voltar" width={51} height={51} />
-            <span>Voltar</span>
-          </div>
+            <Text>Voltar</Text>
+          </Flex>
 
-          {/* Texto e botão - canto direito */}
-          <div className="absolute top-20 right-6 text-[#055371] text-center max-w-md">
-            <p className="mb-4">
-              Adicione trilhas musicais não identificadas de forma rápida e prática!
+          {/* Texto e botão (lado direito) */}
+          <Flex
+            direction="column"
+            position="absolute"
+            top={20}
+            right={6}
+            textAlign="center"
+            maxW="md"
+            color="#055371"
+          >
+            <Text mb={4}>
+              Adicione trilhas musicais não identificadas de forma rápida e prática! <br />
               Organize, complete e mantenha seu arquivo sempre atualizado, sem complicação.
-            </p>
+            </Text>
+
             <Button
               borderRadius="lg"
               bg="#055371"
@@ -67,16 +75,14 @@ export default function TrilhaIdentificada() {
             >
               Adicionar Trilha
             </Button>
-          </div>
-        </div>
-      </div>
+          </Flex>
+        </Box>
 
-      {/* Conteúdo principal */}
-      <main className="!pt-6">
-        <div className="flex flex-col items-center">
-          <h1 className="!text-4xl !mb-4 !font-bold text-[#055371]">
+        {/* Conteúdo principal */}
+        <Flex as="main" direction="column" align="center" pt={6} px={4} flex={1}>
+          <Text fontSize="4xl" mb={4} fontWeight="bold" color="#055371">
             Trilha(s) identificadas
-          </h1>
+          </Text>
 
           {trilhas.map((trilha) => (
             <CardTrilha
@@ -89,15 +95,17 @@ export default function TrilhaIdentificada() {
               gMusicID={trilha.gMusicID}
             />
           ))}
-        </div>
-      </main>
+        </Flex>
+
+        {/* Footer */}
         <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
-                  <Flex justify="center">
-                    <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
-                      GLOBOBEAT
-                    </Text>
-                  </Flex>
-                </Box>
-    </div>
-  );
+          <Flex justify="center">
+            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
+              GLOBOBEAT
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
+    </Sidebar>
+  )
 }

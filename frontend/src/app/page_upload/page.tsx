@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react"
 import { Sidebar } from "@/components/sidebar"
 import { Search, User } from "lucide-react"
+import { Header } from "@/components/header"
 
 export default function DashboardPage() {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
@@ -21,22 +22,7 @@ export default function DashboardPage() {
     <Sidebar>
       <Flex direction="column" minH="100vh">
         {/* Header */}
-        <Box as="header" w="full" bg="#055371" borderBottom="2px solid" borderColor="whiteAlpha.300" px={8} py={4}>
-          <Flex align="center" justify="space-between">
-            <Box flex={1} />
-            <Flex flex={1} justify="center">
-              <Image src="/logo.png" alt="GloboBeat Logo" width={50} height={50} style={{ objectFit: "contain" }} />
-            </Flex>
-            <Flex flex={1} justify="flex-end" gap={4}>
-              <Button variant="ghost" color="white" size="sm" _hover={{ bg: "whiteAlpha.200" }} aria-label="Buscar">
-                <Search size={20} />
-              </Button>
-              <Button variant="ghost" color="white" size="sm" _hover={{ bg: "whiteAlpha.200" }} aria-label="Perfil">
-                <User size={20} />
-              </Button>
-            </Flex>
-          </Flex>
-        </Box>
+        <Header />
 
         {/* Main Content */}
         <Flex as="main" flex={1} align="center" justify="center" px={4} py={8}>

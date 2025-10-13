@@ -1,7 +1,10 @@
-import PrincipalHeader from "@/components/PrincipalHeader";
-import CardTrilha from "@/components/CardTrilha";
-import Image from "next/image";
-import { Button,Box, Flex, Text } from "@chakra-ui/react";
+"use client"
+
+import { Sidebar } from "@/components/sidebar"
+import { Header } from "@/components/header"
+import CardTrilha from "@/components/CardTrilha"
+import Image from "next/image"
+import { Button, Box, Flex, Text } from "@chakra-ui/react"
 
 export default function TrilhaIdentificada() {
   const trilhas = [
@@ -12,7 +15,6 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXX",
-      
     },
     {
       nome: "Oceano",
@@ -21,7 +23,6 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXY",
-      
     },
     {
       nome: "Oceano",
@@ -30,41 +31,53 @@ export default function TrilhaIdentificada() {
       timeStamp: "00:23 - 1:00",
       politica: "(Não encontrada/Restrita/Livre)",
       gMusicID: "XXXXXXXXXZ",
-      
     },
-  ];
+  ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header normal */}
-      <div className="w-full bg-white shadow-md">
-        <PrincipalHeader />
+    <Sidebar>
+      <Flex direction="column" minH="100vh" bg="white">
+        {/* Header principal */}
+        <Header />
 
-        {/* Barra superior */}
-        <div className="relative px-6 py-4 text-[#055371]">
-          {/* Botão Voltar - canto esquerdo */}
-          <div className="absolute top-4 left-6 flex gap-2 items-center text-2xl cursor-pointer">
+        {/* Barra superior (detalhes e ações) */}
+        <Box position="relative" px={6} py={4} color="#055371">
+          {/* Botão Voltar */}
+          <Flex position="absolute" top={4} left={6} gap={2} align="center" cursor="pointer" fontSize="2xl">
             <Image src="/voltar.png" alt="Voltar" width={51} height={51} />
-            <span>Voltar</span>
-          </div>
+            <Text>Voltar</Text>
+          </Flex>
 
-          {/* Texto e botão - canto direito */}
-          <div className="flex flex-col items-center absolute top-20 right-6 text-[#055371] text-center max-w-md gap-10">
-            <h1 className="!text-2xl !font-bold">Status: <span className="text-yellow-300">Pendente</span></h1>
+          {/* Status + validação + botão PDF */}
+          <Flex
+            direction="column"
+            align="center"
+            position="absolute"
+            top={20}
+            right={6}
+            color="#055371"
+            textAlign="center"
+            gap={10}
+          >
+            <Text fontSize="2xl" fontWeight="bold">
+              Status: <Text as="span" color="yellow.300">Pendente</Text>
+            </Text>
+
             <select
-                id="validar"
-                name="validar"
-                defaultValue=""
-                className="!w-100 !p-2 border rounded-lg bg-white text-gray-800 text-sm
-                        focus:outline-none ring-2 focus:ring-blue-500 border-blue-400
-                        transition duration-200"
+              id="validar"
+              name="validar"
+              defaultValue=""
+              className="!w-100 !p-2 border rounded-lg bg-white text-gray-800 text-sm
+                         focus:outline-none ring-2 focus:ring-blue-500 border-blue-400
+                         transition duration-200"
             >
-                <option value="" disabled>
+              <option value="" disabled>
                 Validar
-                </option>
-                <option value="confirmar">Confirmar</option>
-                <option value="negar">Negar</option>
+              </option>
+              <option value="confirmar">Confirmar</option>
+              <option value="negar">Negar</option>
             </select>
+
             <Button
               borderRadius="lg"
               bg="#055371"
@@ -77,16 +90,14 @@ export default function TrilhaIdentificada() {
             >
               Gerar PDF
             </Button>
-          </div>
-        </div>
-      </div>
+          </Flex>
+        </Box>
 
-      {/* Conteúdo principal */}
-      <main className="!pt-6">
-        <div className="flex flex-col items-center">
-          <h1 className="!text-4xl !mb-4 !font-bold text-[#055371]">
+        {/* Conteúdo principal */}
+        <Flex as="main" direction="column" align="center" pt={6} px={4} flex={1}>
+          <Text fontSize="4xl" mb={4} fontWeight="bold" color="#055371">
             22/09/2025 - Reportagem 10
-          </h1>
+          </Text>
 
           {trilhas.map((trilha) => (
             <CardTrilha
@@ -99,15 +110,17 @@ export default function TrilhaIdentificada() {
               gMusicID={trilha.gMusicID}
             />
           ))}
-        </div>
-      </main>
-         <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
-                          <Flex justify="center">
-                            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
-                              GLOBOBEAT
-                            </Text>
-                          </Flex>
-                        </Box>
-    </div>
-  );
+        </Flex>
+
+        {/* Footer */}
+        <Box as="footer" w="full" bg="#055371" py={6} borderTop="2px solid" borderColor="whiteAlpha.300">
+          <Flex justify="center">
+            <Text fontSize="3xl" fontWeight="bold" color="white" letterSpacing="wider">
+              GLOBOBEAT
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
+    </Sidebar>
+  )
 }
