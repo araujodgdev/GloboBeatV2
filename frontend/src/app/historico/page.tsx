@@ -4,38 +4,50 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-interface ValidacaoItem {
+interface HistoricoItem {
   id: string;
   data: string;
   reportagem: string;
-  status: "Validação Pendente";
+  status: "Validação Confirmada" | "Validação Negada";
 }
 
-export default function ValidacaoPage() {
-  const validacoes: ValidacaoItem[] = [
+export default function HistoricoPage() {
+  const historico: HistoricoItem[] = [
     {
       id: "1",
-      data: "22/09/2025",
-      reportagem: "Reportagem10",
-      status: "Validação Pendente",
+      data: "21/09/2025",
+      reportagem: "Reportagem9",
+      status: "Validação Confirmada",
     },
     {
       id: "2",
-      data: "20/09/2025",
-      reportagem: "Reportagem8",
-      status: "Validação Pendente",
+      data: "18/09/2025",
+      reportagem: "Reportagem6",
+      status: "Validação Confirmada",
     },
     {
       id: "3",
-      data: "19/09/2025",
-      reportagem: "Reportagem7",
-      status: "Validação Pendente",
+      data: "17/09/2025",
+      reportagem: "Reportagem5",
+      status: "Validação Negada",
     },
     {
       id: "4",
-      data: "14/09/2025",
-      reportagem: "Reportagem2",
-      status: "Validação Pendente",
+      data: "16/09/2025",
+      reportagem: "Reportagem4",
+      status: "Validação Confirmada",
+    },
+    {
+      id: "5",
+      data: "15/09/2025",
+      reportagem: "Reportagem3",
+      status: "Validação Confirmada",
+    },
+    {
+      id: "6",
+      data: "13/09/2025",
+      reportagem: "Reportagem1",
+      status: "Validação Negada",
     },
   ];
 
@@ -68,7 +80,7 @@ export default function ValidacaoPage() {
             </Link>
           </Box>
           <Heading as="h1" size="xl" color="#055371" fontWeight="bold">
-            Validação
+            Histórico
           </Heading>
         </Flex>
 
@@ -81,10 +93,10 @@ export default function ValidacaoPage() {
           mx="auto"
         >
           <Flex direction="column" gap={4}>
-            {validacoes.map((item) => (
+            {historico.map((item) => (
               <Link
                 key={item.id}
-                href={`/validacao/${item.id}`}
+                href={`/historico/${item.id}`}
                 style={{ textDecoration: "none" }}
               >
                 <Flex
@@ -100,7 +112,15 @@ export default function ValidacaoPage() {
                   <Text color="#055371" fontWeight="semibold" fontSize="md">
                     {item.data} - {item.reportagem}
                   </Text>
-                  <Text color="#FFC107" fontWeight="bold" fontSize="md">
+                  <Text
+                    color={
+                      item.status === "Validação Confirmada"
+                        ? "#00C853"
+                        : "#FF1744"
+                    }
+                    fontWeight="bold"
+                    fontSize="md"
+                  >
                     {item.status}
                   </Text>
                 </Flex>

@@ -1,11 +1,8 @@
 "use client"
 
-import { Sidebar } from "@/components/sidebar"
-import { Header } from "@/components/header"
 import CardTrilha from "@/components/CardTrilha"
 import Image from "next/image"
 import { Button, Box, Flex, Text } from "@chakra-ui/react"
-import { Footer } from "@/components/footer"
 
 export default function TrilhasIdentificadas() {
   const trilhas = [
@@ -36,11 +33,8 @@ export default function TrilhasIdentificadas() {
   ]
 
   return (
-    <Sidebar>
-      <Flex direction="column" minH="100vh" bg="white">
-        {/* Header */}
-        <Header />
-
+    <>
+      <Flex direction="column" flex={1} bg="white">
         {/* Barra superior */}
         <Box position="relative" px={6} py={4} color="#055371">
           {/* Botão Voltar */}
@@ -98,9 +92,7 @@ export default function TrilhasIdentificadas() {
           ))}
         </Flex>
 
-        {/* Footer */}
-        <Footer />
       </Flex>
-    </Sidebar>
+    </>
   )
 }
