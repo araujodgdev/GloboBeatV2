@@ -24,7 +24,6 @@ export default function Dashboard() {
   return (
     <>
       <Box as="main" flex={1} bg="white" p={8} px={32}>
-        {/* ... (código do cabeçalho e da lista, sem alterações) ... */}
         <Flex align="center" justify="center" mb={8} position="relative">
           <Box position="absolute" left={0}>
             <Link href="/page_upload">
@@ -65,12 +64,26 @@ export default function Dashboard() {
           mx="auto"
         >
           <VStack spacing={4} align="stretch"> 
-            <Flex justify="space-between" align="center" mb={8}>
-              <Heading as="h2" size="lg" color="white" fontWeight="medium">
+            
+            <Box position="relative" mb={8}>
+              <Heading 
+                as="h2" 
+                size="3xl"
+                color="white" 
+                fontWeight="medium"
+                textAlign="center"
+              >
                 Último ano:
               </Heading>
-              <Filter color="white" cursor="pointer" />
-            </Flex>
+              <Box 
+                position="absolute" 
+                right={0} 
+                top="50%" 
+                transform="translateY(-50%)"
+              >
+                <Filter size={38} color="white" cursor="pointer" />
+              </Box>
+            </Box>
 
             <VStack spacing={5} align="stretch">
               {musicas.map((musica) => (
@@ -106,10 +119,9 @@ export default function Dashboard() {
             borderRadius="lg"
             bg="#055371"
             color="white"
-            // 👇 Valores aumentados aqui 👇
-            px={12}          // Padding horizontal (antes era 8)
-            py={7}           // Padding vertical (antes era 6)
-            fontSize="xl"    // Tamanho da fonte (antes era lg)
+            px={12}
+            py={7}
+            fontSize="xl"
             fontWeight="bold"
             _hover={{ bg: "#066d95" }}
             disabled={!validacao_selecionada}
