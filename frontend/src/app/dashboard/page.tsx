@@ -10,7 +10,7 @@ import {
   Button,
   IconButton,
 } from "@chakra-ui/react";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, X, Filter } from "lucide-react";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -31,10 +31,10 @@ export default function Dashboard() {
     { value: "ultimo_mes", label: "Último mês" },
   ];
 
-  const [selectedFilterValue, setSelectedFilterValue] = useState<string>("ultimo_ano");
-  const [selectedFilterLabel, setSelectedFilterLabel] = useState<string>("Último ano");
+  const [selectedFilterValue, setSelectedFilterValue] = useState("ultimo_ano");
+  const [selectedFilterLabel, setSelectedFilterLabel] = useState("Último ano");
 
-  const [panelSelection, setPanelSelection] = useState<string>(selectedFilterValue);
+  const [panelSelection, setPanelSelection] = useState(selectedFilterValue);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -57,30 +57,28 @@ export default function Dashboard() {
     setTimeout(() => closeBtnRef.current?.focus(), 100);
   };
 
-  // Agora, ao selecionar uma opção, o título muda imediatamente
   const handleSelectOption = (optValue: string) => {
     const chosen = FILTER_OPTIONS.find((f) => f.value === optValue);
     if (!chosen) return;
     setPanelSelection(chosen.value);
-    setSelectedFilterValue(chosen.value);   // atualiza valor selecionado
-    setSelectedFilterLabel(chosen.label);   // atualiza label mostrado no título na hora
   };
 
   const applyPanelSelection = () => {
-    // Com a lógica acima, aplicar só fecha o painel — a seleção já foi aplicada instantaneamente.
+    const chosen = FILTER_OPTIONS.find((f) => f.value === panelSelection);
+    if (chosen) {
+      setSelectedFilterValue(chosen.value);
+      setSelectedFilterLabel(chosen.label);
+    }
     setIsPanelOpen(false);
   };
 
   const cancelPanel = () => {
-    // Se quiser que cancelar reverta ao que estava antes de abrir, descomenta a linha abaixo:
-    // setSelectedFilterValue(selectedFilterValue); setSelectedFilterLabel(selectedFilterLabel);
     setPanelSelection(selectedFilterValue);
     setIsPanelOpen(false);
   };
 
   const handleValidar = () => {
     console.log("Gerar PDF - filtro:", selectedFilterLabel);
-    // lógica de geração de PDF...
   };
 
   const validacao_selecionada = !!selectedFilterValue;
@@ -106,7 +104,6 @@ export default function Dashboard() {
               </Flex>
             </Link>
           </Box>
-
           <Heading as="h1" fontSize="40px" color="#055371" fontWeight="bold">
             Dashboard
           </Heading>
@@ -115,27 +112,22 @@ export default function Dashboard() {
         <Box bg="#055371" border="2px solid white" borderRadius="lg" p={6} w="full" maxW="1500px" mx="auto">
           <VStack spacing={4} align="stretch">
             <Box position="relative" mb={8}>
-              {/* Título com cor fixa do conteúdo */}
               <Heading as="h2" size="3xl" color="white" fontWeight="medium" textAlign="center">
                 {selectedFilterLabel}:
               </Heading>
-
               <Box position="absolute" right={0} top="50%" transform="translateY(-50%)">
-                {/* Botão de filtro visível usando FontAwesome — círculo branco com ícone colorido */}
                 <Button
                   aria-label="Abrir filtros"
                   onClick={openPanel}
                   bg="white"
-                  color="#055371"
-                  w="36px"
-                  h="36px"
-                  minW="36px"
+                  w="56px"
+                  h="56px"
                   borderRadius="full"
                   _hover={{ bg: "whiteAlpha.900" }}
-                  boxShadow="sm"
+                  boxShadow="none"
+                  p={0}
                 >
-                  {/* usa o ícone exatamente como tu pediu */}
-                  <i className="fa-solid fa-filter" style={{ color: "#055371", fontSize: 16 }} />
+                  <Filter color="#055371" size={32} />
                 </Button>
               </Box>
             </Box>
@@ -146,7 +138,6 @@ export default function Dashboard() {
                   <Text color="#055371" fontWeight="Bold" fontSize="lg">
                     {musica.nome}
                   </Text>
-
                   <Text color="#055371" fontSize="lg" fontWeight="bold">
                     {musica.plays}
                   </Text>
@@ -174,19 +165,15 @@ export default function Dashboard() {
         </Flex>
       </Box>
 
-      {/* BACKDROP */}
       <Box
         as="div"
         display={isPanelOpen ? "block" : "none"}
         position="fixed"
         inset={0}
         bg="blackAlpha.600"
-        zIndex={999}
+        zIndex={1000}
         onClick={cancelPanel}
-        transition="opacity 200ms ease"
       />
-
-      {/* SIDEBAR PANEL */}
       <Box
         as="aside"
         position="fixed"
@@ -196,18 +183,15 @@ export default function Dashboard() {
         width={{ base: "85%", md: "380px" }}
         maxW="100%"
         bg="white"
-        zIndex={1000}
+        zIndex={1001}
         boxShadow="lg"
         transform={isPanelOpen ? "translateX(0)" : "translateX(110%)"}
         transition="transform 240ms ease"
-        aria-hidden={!isPanelOpen}
-        role="dialog"
-        aria-label="Filtros"
+        display="flex"
+        flexDirection="column"
       >
-        <Flex align="center" justify="space-between" p={4} borderBottom="1px solid" borderColor="gray.100">
-          {/* título 'Filtros' com a cor pedida */}
+        <Flex align="center" justify="space-between" p={4} borderBottom="1px solid" borderColor="gray.100" flexShrink={0}>
           <Heading size="md" color="#055371">Filtros</Heading>
-
           <IconButton
             aria-label="Fechar filtros"
             icon={<X size={16} color="#055371" />}
@@ -217,23 +201,18 @@ export default function Dashboard() {
             bg="transparent"
           />
         </Flex>
-
-        <Box p={4} overflowY="auto" height="calc(100vh - 72px)">
-          {/* texto 'Selecionar período' com a cor pedida */}
+        
+        <Box p={4} overflowY="auto" flex="1">
           <Text mb={4} color="#055371" fontWeight="semibold">Selecione o período:</Text>
-
-          {/* RADIO GROUP SIMPLES (USANDO INPUT NATIVO) */}
-          <Box role="radiogroup" aria-label="Período">
+          <VStack as="div" role="radiogroup" aria-label="Período" align="stretch" spacing={3}>
             {FILTER_OPTIONS.map((opt) => {
               const checked = panelSelection === opt.value;
               return (
                 <Box
                   key={opt.value}
                   as="label"
-                  display="block"
                   cursor="pointer"
-                  mb={3}
-                  onClick={() => handleSelectOption(opt.value)} // muda instantaneamente
+                  onClick={() => handleSelectOption(opt.value)}
                 >
                   <input
                     type="radio"
@@ -241,7 +220,7 @@ export default function Dashboard() {
                     value={opt.value}
                     checked={checked}
                     onChange={() => handleSelectOption(opt.value)}
-                    style={{ display: "none" }}
+                    style={{ position: "absolute", opacity: 0, width: 0, height: 0 }}
                   />
                   <Flex
                     align="center"
@@ -250,52 +229,32 @@ export default function Dashboard() {
                     borderRadius="md"
                     border="1px solid"
                     borderColor={checked ? "#055371" : "gray.200"}
-                    bg={checked ? "#f5fbfd" : "white"}
-                    _hover={{ bg: checked ? "#f0fbff" : "gray.50" }}
+                    bg={checked ? "blue.50" : "white"}
+                    _hover={{ bg: checked ? "blue.100" : "gray.50" }}
                   >
                     <Text color="#055371" fontWeight={checked ? "semibold" : "normal"}>
                       {opt.label}
                     </Text>
-
                     {checked ? (
-                      <Box
-                        as="span"
-                        display="inline-flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        w="22px"
-                        h="22px"
-                        borderRadius="50%"
-                        bg="#055371"
-                        aria-hidden="true"
-                      >
-                        <X size={14} color="white" />
-                      </Box>
+                      <Flex as="span" align="center" justify="center" w="22px" h="22px" borderRadius="full" bg="#055371" aria-hidden="true">
+                        <Box w="8px" h="8px" borderRadius="full" bg="white" />
+                      </Flex>
                     ) : (
-                      <Box
-                        as="span"
-                        display="inline-block"
-                        w="22px"
-                        h="22px"
-                        borderRadius="50%"
-                        border="2px solid"
-                        borderColor="gray.300"
-                        aria-hidden="true"
-                      />
+                      <Box as="span" w="22px" h="22px" borderRadius="full" border="2px solid" borderColor="gray.300" aria-hidden="true" />
                     )}
                   </Flex>
                 </Box>
               );
             })}
-          </Box>
+          </VStack>
         </Box>
 
-        <Flex p={4} borderTop="1px solid" borderColor="gray.100" gap={3}>
+        <Flex p={4} borderTop="1px solid" borderColor="gray.100" gap={3} flexShrink={0}>
           <Button variant="outline" onClick={cancelPanel} flex="1">
             Cancelar
           </Button>
-          <Button colorScheme="teal" onClick={applyPanelSelection} flex="1">
-            Fechar
+          <Button colorScheme="blue" onClick={applyPanelSelection} flex="1" bg="#055371" _hover={{ bg: '#04435a' }}>
+            Aplicar
           </Button>
         </Flex>
       </Box>
