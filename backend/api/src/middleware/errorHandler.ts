@@ -11,9 +11,9 @@ interface CustomError extends Error {
  */
 export const errorHandler = (
   err: CustomError | MulterError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void => {
   console.error('Error:', err);
 
@@ -59,7 +59,8 @@ export const errorHandler = (
   }
 
   // Default error
-  res.status(err.status || 500).json({
+  const customErr = err as CustomError;
+  res.status(customErr.status || 500).json({
     success: false,
     error: err.message || 'Internal server error',
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })

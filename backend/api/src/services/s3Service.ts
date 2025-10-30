@@ -1,6 +1,5 @@
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 import { Readable } from 'stream';
 import s3Client, { S3_CONFIG } from '../config/s3.js';
 import type { S3UploadResult } from '../types/index.js';
@@ -20,7 +19,6 @@ class S3Service {
   ): Promise<S3UploadResult> {
     const fileId = uuidv4();
     const timestamp = Date.now();
-    const ext = path.extname(originalFilename);
     const sanitizedFilename = originalFilename.replace(/[^a-zA-Z0-9._-]/g, '_');
     const s3Key = `uploads/${fileId}-${timestamp}-${sanitizedFilename}`;
 

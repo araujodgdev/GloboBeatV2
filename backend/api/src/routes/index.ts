@@ -6,7 +6,7 @@ const router = Router();
 /**
  * Health check endpoint
  */
-router.get('/health', (req: Request, res: Response) => {
+router.get('/health', (_req: Request, res: Response) => {
   res.json({
     success: true,
     service: 'GloboBeat API',

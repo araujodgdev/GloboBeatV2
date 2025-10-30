@@ -22,7 +22,7 @@ const ALLOWED_MIME_TYPES = [
 const storage = multer.memoryStorage();
 
 const fileFilter = (
-  req: Request,
+  _req: Request,
   file: Express.Multer.File,
   cb: multer.FileFilterCallback
 ): void => {

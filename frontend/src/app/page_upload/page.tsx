@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
-import { Box, Button, Flex, Text, VStack, Progress, Alert } from "@chakra-ui/react"
+import { Box, Button, Flex, Text, VStack, Alert } from "@chakra-ui/react"
 import { Sidebar } from "@/components/sidebar"
 import { Search, User, Upload, CheckCircle, XCircle } from "lucide-react"
 import { Header } from "@/components/header"
@@ -167,9 +167,22 @@ export default function DashboardPage() {
               {uploadStatus === 'uploading' && (
                 <Box mt={4}>
                   <Text fontSize="sm" color="gray.600" mb={2} textAlign="center">
-                    Enviando arquivo...
+                    Enviando arquivo... {uploadProgress}%
                   </Text>
-                  <Progress value={uploadProgress} size="sm" colorScheme="blue" borderRadius="md" />
+                  <Box
+                    width="100%"
+                    height="8px"
+                    bg="gray.200"
+                    borderRadius="md"
+                    overflow="hidden"
+                  >
+                    <Box
+                      height="100%"
+                      width={`${uploadProgress}%`}
+                      bg="blue.500"
+                      transition="width 0.3s ease"
+                    />
+                  </Box>
                 </Box>
               )}
 
